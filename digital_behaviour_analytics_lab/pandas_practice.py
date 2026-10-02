@@ -16,4 +16,45 @@ print(df['YouTube_Minutes'].max())
 print(df[df['Instagram_Minutes']>100])
 print(df[df['Study_Minutes']>180])
 print(df[df['Instagram_Minutes']>df['Study_Minutes']])
-print(df['Instagram_Minutes'].sort())
+df_insta_sorting=df.sort_values('Instagram_Minutes',ascending=False)
+print(df_insta_sorting)
+print(df_insta_sorting.head(5))
+df_study_sorting=df.sort_values('Study_Minutes',ascending=False)
+print(df_study_sorting.head(5))
+df['Total_Screen_Time']=(df['Instagram_Minutes']+df['YouTube_Minutes']+df['WhatsApp_Minutes']+df['LinkedIn_Minutes'])
+print(df['Total_Screen_Time'])
+df['Screen_Hours']=df['Total_Screen_Time']/60;
+print(df['Screen_Hours'])
+df['Digital_Balance']=df['Study_Minutes']/df['Total_Screen_Time']
+print(df['Digital_Balance'])
+df['Day_Type']='normal'
+print(df['Day_Type'])
+# loc method is used to select the data from the dataframe based on  the rows,columns 
+# syntax=.loc[what rows condition,what columns condition] 
+df.loc[df['Total_Screen_Time']>300,'Day_Type']="Heavy"
+print(df['Day_Type'])
+print(df.head(10))
+# print(df.loc[''])
+Total_Minutes={
+    "Intasgram":df['Instagram_Minutes'].sum(),
+    "Youtube":df['YouTube_Minutes'].sum(),
+    "Whatsapp":df['WhatsApp_Minutes'].sum(),
+    "LinkedIn":df["LinkedIn_Minutes"].sum()
+    
+}
+print(Total_Minutes)
+print(max(Total_Minutes,key=Total_Minutes.get))
+
+# print((df['Day_Type']=='Heavy').sum())
+# print(df['Day_Type'])
+max_idx=df['Digital_Balance'].idxmax()
+# print(df.loc[max_idx,''])
+# print(df)
+print(df.loc[max_idx,'Date'])
+# df.to_csv('my_analysis.csv')
+max_screen_time_idx=df['Total_Screen_Time'].idxmax()
+print(df.loc[max_screen_time_idx,'Date'])
+print(df.loc[max_screen_time_idx,'Study_Minutes'])
+digital_avg=df['Digital_Balance'].mean();
+print(digital_avg)
+
