@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
 df=pd.read_csv('digital_behaviour_data.csv')
 # print(df)
 print(df.head(5))
@@ -57,4 +58,35 @@ print(df.loc[max_screen_time_idx,'Date'])
 print(df.loc[max_screen_time_idx,'Study_Minutes'])
 digital_avg=df['Digital_Balance'].mean();
 print(digital_avg)
+df['Day_Label']=[f'D{i+1}' for i in range(len(df))]
+cols=df['Day_Label']
+plt.tight_layout()
+plt.bar(cols,df['Total_Screen_Time'])
+plt.title('MY Screen Time by Day')
+plt.xlabel('Day')
+plt.ylabel('Minutes')
+plt.xticks(rotation=90)
+
+plt.close()
+insta_total_time=df['Instagram_Minutes'].sum()
+whatsapp_minutes=df['WhatsApp_Minutes'].sum()
+youtube_minutes=df['YouTube_Minutes'].sum()
+LinkedIn_Minutes=df['LinkedIn_Minutes'].sum()
+plt.bar(['Instagram','WhatsApp','Youtube','LinkedIn'],[insta_total_time,whatsapp_minutes,youtube_minutes,LinkedIn_Minutes])
+plt.title('Total Time by App')
+plt.close()
+plt.tight_layout()
+plt.plot(df['Day_Label'],df['Study_Minutes'],color='green',label='study')
+# plt.legend()
+plt.plot(df['Day_Label'],df['Total_Screen_Time'],color='red',label='screen time')
+plt.xlabel('Day')
+plt.ylabel('Minutes')
+plt.title('Study time vs screen time')
+plt.legend()
+# plt.show()
+plt.close()
+plt.pie([insta_total_time,whatsapp_minutes,youtube_minutes,LinkedIn_Minutes],labels=['Instagram','Whatsapp','youtube','LinkedIn'],autopct='%1.1f%%')
+plt.savefig('pie_chart.png',dpi=100)
+plt.show()
+
 
