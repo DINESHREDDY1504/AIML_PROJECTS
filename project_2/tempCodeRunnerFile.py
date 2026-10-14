@@ -1,1 +1,0 @@
-chat_arr=df['Chat'].to_numpy()
